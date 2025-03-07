@@ -11,3 +11,17 @@ app.get('/entities', (req, res) => {
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);    
 })
+
+app.post('/tasks', (req, res) => {
+    const { title, description, status } = req.body;
+    try {
+      if (!title || !description || !status) {
+        res.status(400).json({ message: 'Please provide all details' });
+      }
+      entities.push({ id: entities.length + 1, title, description, status });
+      res.status(200).json({ message: 'Task submitted' });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+)
