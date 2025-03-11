@@ -25,3 +25,17 @@ app.post('/tasks', (req, res) => {
     }
 }
 )
+
+app.delete('/tasks/:id', (req, res) => {
+    const id = req.params.id;
+    try {
+      const index = entities.findIndex((entity) => entity.id == id);
+      if (index === -1) {
+        res.status(404).json({ message: 'Task not found' });
+      }
+      entities.splice(index, 1);
+      res.status(200).json({ message: 'Task deleted' });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
